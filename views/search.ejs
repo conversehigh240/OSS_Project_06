@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>opensource</title>
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">오픈소스팀플</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#narbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Togle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list">List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h4 class="container mt-5"><strong> 가수 이름 검색</strong></h4>
+    <div class="container input-group mb-1">
+        <input class="'form-control" id="search-input">
+        <button class="input-group-append btn btn-danger" id="search">검색</button>
+    </div>
+    <% for(let i = 0; i < searchPost.length; i++){ %>
+        <div style="background: rgb(247, 247, 247); padding: 10px; margin: 10px 0;">
+            <p class="mb-2">singer: <%= searchPost[i].singer %></p>
+            <p class="mb-2">songs: <%= searchPost[i].songs %></p>
+        </div>
+    <% } %>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $('#search').click(function(){
+                let searchVal = $('#search-input').val();
+                window.location.replace('/search?value=${searchVal}');
+            })
+        </script>
+    
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
