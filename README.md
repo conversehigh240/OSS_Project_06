@@ -22,6 +22,5 @@ by 이철한 (2022-12-02)
 
 4. 입력된 artist id에 해당되는 artist의 Top 10 track을 출력할 때, 각 track의 audio feature를 각 list에 push하여 저장
 
-5. 실행하면 각 track의 feature가 console에 출력됨.
-
-5-1. feature 목록 (순서대로) : trackname, popularity, id, danceability, energy, key, loudness, mode, acousticness, durationms, instrumentalness, liveness, tempo, valence
+5. 실행하면 각 track의 feature가 console에 출력됨. 
+  feature 목록 (순서대로) : trackname, popularity, id, danceability, energy, key, loudness, mode, acousticness, durationms, instrumentalness, liveness, tempo, valence
