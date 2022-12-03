@@ -43,6 +43,49 @@
         </strong>
     </font>
 
+    <!-- -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div>
+        <canvas id="myChart" width="500" height="500"></canvas>
+      </div>
+
+      <script>
+        const ctx = document.getElementById('myChart');
+        
+
+
+        new Chart(ctx, {
+          type: 'radar',
+          data: {
+            labels: [ 'danceability', 'energy', 'loudness' , 'acousticness', 'liveness', 'tempo'],
+            datasets: [{
+              label: '# of Votes',
+              data: ['<%= data0 %>','<%= data1 %>','<%= data2 %>','<%= data3 %>','<%= data4 %>','<%= data5 %>'],
+              fill: true,
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgb(255, 99, 132)',
+              pointBackgroundColor: 'rgb(255, 99, 132)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgb(255, 99, 132)',
+            }]
+          },
+          options: {
+            responsive: false,
+            elements: {
+              line: {
+                borderWidth: 3
+              }
+            }
+          },
+        });
+      </script>
+
+    
+      
+    
+                
+    <!-- -->
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
