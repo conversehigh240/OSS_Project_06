@@ -67,7 +67,6 @@ app.post('/login',function (req, res) {
     var valenceList = [];
 
     var relatedartists = [];
-    var mostrelatedartisttrack = [];
 
     var mostrelatedartistname = '';
 
@@ -191,8 +190,8 @@ app.post('/login',function (req, res) {
             
             if(tracknameList.length == 10){
             console.log('====================================================================================');
-            for(var i=0; i < mostrelatedartistname.length; i++){
-                console.log("Audio Feature List of " + mostrelatedartistname[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
+            for(var i=0; i < relatedartists.length; i++){
+                console.log("Audio Feature List of " + relatedartists[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
             }
             }
        })
