@@ -141,7 +141,7 @@ app.post('/login',function (req, res) {
             // console.log(data.body); 
         })
         });})
-        //관련된 아티스트 목록 출력 및 저장
+        // 관련된 아티스트 목록 출력 및 저장
         spotifyApi.getArtistRelatedArtists(SingerId)
     .then(function(data){
        if (data.body.artists.length) {
