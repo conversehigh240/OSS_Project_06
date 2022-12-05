@@ -8,7 +8,6 @@ app.use(bodyParser.json());	// json 등록
 app.use(bodyParser.urlencoded({ extended : false }));
 
 
-
 /**
  * This example retrieves the top tracks for an artist.
  * https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-top-tracks/
@@ -56,7 +55,6 @@ app.post('/login',function (req, res) {
     var energyList = [];
     var keyList = [];
     var loudnessList = [];
-    
     var modeList = [];
     var acousticnessList = [];
     var durationmsList = [];
@@ -65,7 +63,6 @@ app.post('/login',function (req, res) {
     var tempoList = [];
     // valence에 대한 설명 : Tracks with high valence sound more positive (happy, cheerful, euphoric), while tracks with low valence sound more negative (sad, depressed, angry).
     var valenceList = [];
-
     var relatedartists = [];
 
     var mostrelatedartistname = '';
@@ -83,7 +80,7 @@ app.post('/login',function (req, res) {
     var relatedlivenessList = [];
     var relatedtempoList = [];
     var relatedvalenceList = [];
-
+    
     // Retrieve an access token
     spotifyApi
     .clientCredentialsGrant()
@@ -139,27 +136,25 @@ app.post('/login',function (req, res) {
             // 위의 List의 내용들이 data.body와 일치하는지 디버그용 console.log
             // console.log(data.body); 
         })
-        });})
-        // 관련된 아티스트 목록 출력 및 저장
         spotifyApi.getArtistRelatedArtists(SingerId)
-    .then(function(data){
-       if (data.body.artists.length) {
-        console.log("===========================================================================")
+        .then(function(data){
+            if (data.body.artists.length!=0) {
+            console.log("===========================================================================")
         
-        console.log("----------related artist list-----------")
-      for(let i=0;i<data.body.artists.length;i++)
-       {
-         relatedartists.push(data.body.artists[i].name);
-         console.log(i+1,". ",data.body.artists[i].name);
-         mostrelatedartistname = data.body.artists[0].id;
-       }}
-
-       //가장 관련된 아티스트의 베스트 트랙 리스트
-       spotifyApi.getArtistTopTracks(mostrelatedartistname,'kr')
+            console.log("----------related artist list-----------")
+            console.log(data.body.artists.length)
+            for(let i=0;i<data.body.artists.length;i++)
+            {
+                  relatedartists.push(data.body.artists[i].name);
+                  console.log(i+1+". "+data.body.artists[i].name);
+                  mostrelatedartistname = data.body.artists[0].id;
+            }}
+          })
+          spotifyApi.getArtistTopTracks(mostrelatedartistname,'kr')
        .then(function(data){
         
-       console.log("----------the most related artist's best song list--------")
-        data.body.tracks.forEach(function(track, index) {
+          console.log("----------the most related artist's best song list--------")
+          data.body.tracks.forEach(function(track, index) {
           mostrelatedartisttrack.push(track.name);
           console.log(
             index +
@@ -189,20 +184,19 @@ app.post('/login',function (req, res) {
             relatedvalenceList.push(data.body.valence);
             
             if(tracknameList.length == 10){
-            console.log('====================================================================================');
-            for(var i=0; i < relatedartists.length; i++){
-                console.log("Audio Feature List of " + relatedartists[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
-            }
-            }
-       })
-      },
-     function(err) {
-     console.log('Something went wrong:', err.message);
-      })
+              console.log('====================================================================================');
+              for(var i=0; i < relatedartists.length; i++){
+                  console.log("Audio Feature List of " + relatedartists[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
+              }
+          }
+        })
+
+
+        });
+        
     })
     .catch(function(err) {
         console.log('Unfortunately, something has gone wrong.', err.message);
     });
-  }) 
-})
-  let server = app.listen(80);
+})});})
+  let server = app.listen(9000);
