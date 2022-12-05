@@ -150,6 +150,7 @@ app.post('/login',function (req, res) {
                   mostrelatedartistname = data.body.artists[0].id;
             }}
           })
+          
           spotifyApi.getArtistTopTracks(mostrelatedartistname,'kr')
        .then(function(data){
         
