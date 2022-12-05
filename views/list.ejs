@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>   
 
-    <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   </head>
-
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgb(255, 99, 132, 0.2)">
         <div class="container-fluid">
@@ -23,10 +21,11 @@
             <a href="https://open.spotify.com" class="nav-item">Spotify</a>
         </div>
     </nav>
-    <h4 class="container mt-5"><strong><center> Analyze</center></strong></h4>
+
+    <h4 class="container mt-5"><strong><center>A n a l y z e</center></strong></h4>
     <div class="container input-group mb-3">
-      <input type="text" class="form-control rounded-pill" placeholder="Who do you want to analyze?" aria-label="Who do you want to analyze?" aria-describedby="button-addon2" onfocus="this.placeholder=''" onblur="this.placeholder='Who do you want to analyze?'">
-      <button class="input-group-append btn btn-danger" id="search">Search</button>
+        <input type="text" id = "search-input" class="form-control rounded-pill" onkeypress="if(event.keyCode == 13) {enterkey();}" placeholder="Who do you want to analyze?" aria-label="Who do you want to analyze?" aria-describedby="button-addon2" onfocus="this.placeholder=''" onblur="this.placeholder='Who do you want to analyze?'">
+        <button class="input-group-append btn btn-danger" id="search">검색</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -38,12 +37,17 @@
         })
     </script>
 
-    <font size=10em>
+    <script>
+      function enterkey() {
+        let name = $('#search-input').val();
+        let ID = name.substr(32);
+        location.href = "http://localhost:8080/search/" + ID;
+      }
+    </script>
+
+    <font size=6em>
         <strong>
-            Top 10 songs of
-        </strong>
-        <strong>
-            <%= singer %>
+            Top 10 songs 
         </strong>
     </font>
 
@@ -52,6 +56,17 @@
         <h4> <%=i%>. <%= tracklist[i-1] %></h4>
       <% } %>
     </font>
+    <font size=6em>
+      <strong>
+          related artist's song
+      </strong>
+    </font>
+    <font size=3em>
+      <% for (var i = 1; i < l+1 ; i++) { %>
+        <h4> <%=i%>. <%= relatetracklist[i-1] %></h4>
+      <% } %>
+    </font>
+
 
     <!-- -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -69,7 +84,7 @@
           data: {
             labels: [ 'danceability', 'energy', 'loudness' , 'acousticness', 'liveness', 'tempo'],
             datasets: [{
-              label: '# of Votes',
+              label: 'artist',
               data: ['<%= data0 %>','<%= data1 %>','<%= data2 %>','<%= data3 %>','<%= data4 %>','<%= data5 %>'],
               fill: true,
               backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -78,6 +93,16 @@
               pointBorderColor: '#fff',
               pointHoverBackgroundColor: '#fff',
               pointHoverBorderColor: 'rgb(255, 99, 132)',
+            },{
+              label: 'related artist',
+              data: ['<%= d0%>','<%= d1%>','<%= d2%>','<%= d3%>','<%= d4%>','<%= d5%>' ],
+              fill: true,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgb(54, 162, 235)',
+              pointBackgroundColor: 'rgb(54, 162, 235)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgb(54, 162, 235)'
             }]
           },
           options: {
@@ -91,6 +116,7 @@
         });
       </script>
 
+    
     
       
     

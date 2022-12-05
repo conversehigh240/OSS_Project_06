@@ -12,8 +12,7 @@ module.exports = function(app){
 
     app.get('/search/:singer',function(req, res, next){
         SingerId = req.params.singer;
-        //singer을 id로부터 받아와야함
-        singer = "에스파";
+        
 
         var tracknameList = [];
 
@@ -24,6 +23,25 @@ module.exports = function(app){
         var livenessList = [];
         var tempoList = [];
 
+        var mostrelatedartistname = "";
+
+        var realrelatedtracknameList = [];
+    
+        var relatedtracknameList = [];
+                
+        var relatedpopularityList = [];
+        var relatedidList = [];
+        var relateddanceabilityList = [];
+        var relatedenergyList = [];
+        var relatedkeyList = [];
+        var relatedloudnessList = [];
+        var relatedmodeList = [];
+        var relatedacousticnessList = [];
+        var relateddurationmsList = [];
+        var relatedinstrumentalnessList = [];
+        var relatedlivenessList = [];
+        var relatedtempoList = [];
+        var relatedvalenceList = [];    
     
 
     
@@ -49,9 +67,47 @@ module.exports = function(app){
             acousticnessList.push(data.body.acousticness);           
             livenessList.push(data.body.liveness);
             tempoList.push(data.body.tempo);
+
+        })
+        });
+        spotifyApi.getArtistRelatedArtists(SingerId)
+  .then(function(data){
+    console.log("===========================================================================")
+    if(data.body.artists.length==0) console.log("there is no related artist..")
+    console.log("----------related artist list-----------")
             
+    for(let i=0;i<data.body.artists.length;i++)
+    {
+            console.log(i+1+". "+data.body.artists[i].name);
+            mostrelatedartistname = data.body.artists[0].id;
+    }
+    spotifyApi
+  .clientCredentialsGrant()
+  .then(function(data) {
+    // Set the access token on the API object so that it's used in all future requests
+    spotifyApi.setAccessToken(data.body['access_token']);
+    // Get the most popular tracks by David Bowie in Great Britain
+    return spotifyApi.getArtistTopTracks(mostrelatedartistname, 'kr');
+  })
+  .then(function(data) {
+    data.body.tracks.forEach(function(track, index) {
+        
+
+        spotifyApi.getAudioFeaturesForTrack(track.id)
+        .then(function(data){
+
+            relatedtracknameList.push(track.name);
+
+            relateddanceabilityList.push(data.body.danceability);
+            relatedenergyList.push(data.body.energy);          
+            relatedloudnessList.push(data.body.loudness);           
+            relatedacousticnessList.push(data.body.acousticness);
+            relatedlivenessList.push(data.body.liveness);
+            relatedtempoList.push(data.body.tempo);
+
             if(tracknameList.length == 10){
                 var featureData = [0,0,0,0,0,0];
+                var relatefeatureData = [0,0,0,0,0,0];
                 for(var i=0; i < tracknameList.length; i++){
                     featureData[0] += danceabilityList[i]/10;
                     featureData[1] += energyList[i]/10;
@@ -60,22 +116,41 @@ module.exports = function(app){
                     featureData[4] += livenessList[i]/10;
                     featureData[5] += tempoList[i]/1000; //tempo는 값이 너무 커서 비율 맞추려고 줄임
                 }
+                for (var i = 0; i < relatedtracknameList.length; i++){
+                    relatefeatureData[0] += relateddanceabilityList[i]/relatedtracknameList.length;
+                    relatefeatureData[1] += relatedenergyList[i]/relatedtracknameList.length;
+                    relatefeatureData[2] -= relatedloudnessList[i]/relatedtracknameList.length;
+                    relatefeatureData[3] += relatedacousticnessList[i]/relatedtracknameList.length;
+                    relatefeatureData[4] += relatedlivenessList[i]/relatedtracknameList.length;
+                    relatefeatureData[5] += relatedtempoList[i]/(relatedtracknameList.length*100);
+                }
 
-                res.render('list', {title: singer, 
-                    singer: singer, 
+                res.render('list', {title: "singer information", 
+                     
                     tracklist : tracknameList,
+                    l : relatedtracknameList.length,
+                    relatetracklist : relatedtracknameList,
                     data0:featureData[0], 
                     data1:featureData[1], 
                     data2:featureData[2],
                     data3:featureData[3],
                     data4:featureData[4],
-                    data5:featureData[5]   
+                    data5:featureData[5],
+                    d0:relatefeatureData[0],
+                    d1:relatefeatureData[1],
+                    d2:relatefeatureData[2],
+                    d3:relatefeatureData[3],
+                    d4:relatefeatureData[4],
+                    d5:relatefeatureData[5]
             })
 
-            }
-
+            }            
+            
         })
-        });
+      })
+    })
+   })
+
     })
     .catch(function(err) {
         console.log('Unfortunately, something has gone wrong.', err.message);
