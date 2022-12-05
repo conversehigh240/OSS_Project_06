@@ -63,11 +63,12 @@ app.post('/login',function (req, res) {
     var tempoList = [];
     // valence에 대한 설명 : Tracks with high valence sound more positive (happy, cheerful, euphoric), while tracks with low valence sound more negative (sad, depressed, angry).
     var valenceList = [];
-    var relatedartists = [];
 
-    var mostrelatedartistname = '';
+    var mostrelatedartistname = "";
 
-   var relatedpopularityList = [];
+    var relatedtracknameList = [];
+            
+    var relatedpopularityList = [];
     var relatedidList = [];
     var relateddanceabilityList = [];
     var relatedenergyList = [];
@@ -79,8 +80,8 @@ app.post('/login',function (req, res) {
     var relatedinstrumentalnessList = [];
     var relatedlivenessList = [];
     var relatedtempoList = [];
-    var relatedvalenceList = [];
-    
+    var relatedvalenceList = [];    
+
     // Retrieve an access token
     spotifyApi
     .clientCredentialsGrant()
@@ -131,45 +132,47 @@ app.post('/login',function (req, res) {
                 console.log("Audio Feature List of " + tracknameList[i] + " : " + popularityList[i] + ", " + idList[i] + ", "+ danceabilityList[i] + ", "+ energyList[i] + ", "+ keyList[i] + ", "+ loudnessList[i] + ", "+ modeList[i] + ", "+ acousticnessList[i] + ", "+ durationmsList[i] + ", "+ instrumentalnessList[i] + ", "+ livenessList[i] + ", "+ tempoList[i] + ", "+ valenceList[i]);
                 //res.send("Audio Feature List of " + tracknameList[i] + " : " + popularityList[i] + ", " + idList[i] + ", "+ danceabilityList[i] + ", "+ energyList[i] + ", "+ keyList[i] + ", "+ loudnessList[i] + ", "+ modeList[i] + ", "+ acousticnessList[i] + ", "+ durationmsList[i] + ", "+ instrumentalnessList[i] + ", "+ livenessList[i] + ", "+ tempoList[i] + ", "+ valenceList[i]);
             }
-            res.send('clear')
-            }
+        }
             // 위의 List의 내용들이 data.body와 일치하는지 디버그용 console.log
             // console.log(data.body); 
         })
-        spotifyApi.getArtistRelatedArtists(SingerId)
-        .then(function(data){
-            if (data.body.artists.length!=0) {
-            console.log("===========================================================================")
-        
-            console.log("----------related artist list-----------")
-            console.log(data.body.artists.length)
-            for(let i=0;i<data.body.artists.length;i++)
-            {
-                  relatedartists.push(data.body.artists[i].name);
-                  console.log(i+1+". "+data.body.artists[i].name);
-                  mostrelatedartistname = data.body.artists[0].id;
-            }}
-          })
-          
-          spotifyApi.getArtistTopTracks(mostrelatedartistname,'kr')
-       .then(function(data){
-        
-          console.log("----------the most related artist's best song list--------")
-          data.body.tracks.forEach(function(track, index) {
-          mostrelatedartisttrack.push(track.name);
-          console.log(
+        });
+        spotifyApi.getArtistRelatedArtists('6YVMFz59CuY7ngCxTxjpxE')
+  .then(function(data){
+    console.log("===========================================================================")
+    if(data.body.artists.length==0) console.log("there is no related artist..")
+    console.log("----------related artist list-----------")
+            
+    for(let i=0;i<data.body.artists.length;i++)
+    {
+            console.log(i+1+". "+data.body.artists[i].name);
+            mostrelatedartistname = data.body.artists[0].id;
+    }
+    spotifyApi
+  .clientCredentialsGrant()
+  .then(function(data) {
+    // Set the access token on the API object so that it's used in all future requests
+    spotifyApi.setAccessToken(data.body['access_token']);
+    // Get the most popular tracks by David Bowie in Great Britain
+    return spotifyApi.getArtistTopTracks(mostrelatedartistname, 'kr');
+  })
+  .then(function(data) {
+    data.body.tracks.forEach(function(track, index) {
+        console.log("\n========the most related artist's best song list===========")
+        console.log(
             index +
-              1 +
-              '. ' +
-              track.name +
-              ' (popularity is ' +
-              track.popularity +
-              ')'
+            1 +
+            '. ' +
+            track.name +
+            ' (popularity is ' +
+            track.popularity +
+            ')'
+        );
 
-          );
-            spotifyApi.getAudioFeaturesForTrack(track.id)
-            .then(function(data){
+        spotifyApi.getAudioFeaturesForTrack(track.id)
+        .then(function(data){
 
+            relatedtracknameList.push(track.name);
             relatedpopularityList.push(track.popularity);
             relatedidList.push(data.body.id);
             relateddanceabilityList.push(data.body.danceability);
@@ -184,20 +187,18 @@ app.post('/login',function (req, res) {
             relatedtempoList.push(data.body.tempo);
             relatedvalenceList.push(data.body.valence);
             
-            if(tracknameList.length == 10){
-              console.log('====================================================================================');
-              for(var i=0; i < relatedartists.length; i++){
-                  console.log("Audio Feature List of " + relatedartists[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
-              }
-          }
+              console.log('\n====================================================================================');
+              for(var i=0; i < relatedtracknameList.length; i++){
+                  console.log("Audio Feature List of " + relatedtracknameList[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
+              
+            }
         })
-
-
-        });
-        
+      })
     })
+   })
+ })
     .catch(function(err) {
         console.log('Unfortunately, something has gone wrong.', err.message);
     });
-})});})
-  let server = app.listen(9000);
+})
+  let server = app.listen(5000);
