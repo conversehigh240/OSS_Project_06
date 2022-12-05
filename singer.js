@@ -66,6 +66,8 @@ app.post('/login',function (req, res) {
 
     var mostrelatedartistname = "";
 
+    var realrelatedtracknameList = [];
+
     var relatedtracknameList = [];
             
     var relatedpopularityList = [];
@@ -137,7 +139,7 @@ app.post('/login',function (req, res) {
             // console.log(data.body); 
         })
         });
-        spotifyApi.getArtistRelatedArtists('6YVMFz59CuY7ngCxTxjpxE')
+        spotifyApi.getArtistRelatedArtists(SingerId)
   .then(function(data){
     console.log("===========================================================================")
     if(data.body.artists.length==0) console.log("there is no related artist..")
@@ -158,7 +160,6 @@ app.post('/login',function (req, res) {
   })
   .then(function(data) {
     data.body.tracks.forEach(function(track, index) {
-        console.log("\n========the most related artist's best song list===========")
         console.log(
             index +
             1 +
@@ -187,11 +188,7 @@ app.post('/login',function (req, res) {
             relatedtempoList.push(data.body.tempo);
             relatedvalenceList.push(data.body.valence);
             
-              console.log('\n====================================================================================');
-              for(var i=0; i < relatedtracknameList.length; i++){
-                  console.log("Audio Feature List of " + relatedtracknameList[i] + " : " + relatedpopularityList[i] + ", " + relatedidList[i] + ", "+ relateddanceabilityList[i] + ", "+ relatedenergyList[i] + ", "+ relatedkeyList[i] + ", "+ relatedloudnessList[i] + ", "+ relatedmodeList[i] + ", "+ relatedacousticnessList[i] + ", "+ relateddurationmsList[i] + ", "+ relatedinstrumentalnessList[i] + ", "+ relatedlivenessList[i] + ", "+ relatedtempoList[i] + ", "+ relatedvalenceList[i]);
-              
-            }
+            console.log("Audio Feature List of " + relatedtracknameList[relatedtracknameList.length-1] + " : " + relatedpopularityList[relatedtracknameList.length-1] + ", " + relatedidList[relatedtracknameList.length-1] + ", "+ relateddanceabilityList[relatedtracknameList.length-1] + ", "+ relatedenergyList[relatedtracknameList.length-1] + ", "+ relatedkeyList[relatedtracknameList.length-1] + ", "+ relatedloudnessList[relatedtracknameList.length-1] + ", "+ relatedmodeList[relatedtracknameList.length-1] + ", "+ relatedacousticnessList[relatedtracknameList.length-1] + ", "+ relateddurationmsList[relatedtracknameList.length-1] + ", "+ relatedinstrumentalnessList[relatedtracknameList.length-1] + ", "+ relatedlivenessList[relatedtracknameList.length-1] + ", "+ relatedtempoList[relatedtracknameList.length-1] + ", "+ relatedvalenceList[relatedtracknameList.length-1]);
         })
       })
     })
@@ -201,4 +198,4 @@ app.post('/login',function (req, res) {
         console.log('Unfortunately, something has gone wrong.', err.message);
     });
 })
-  let server = app.listen(5000);
+  let server = app.listen(5002);
