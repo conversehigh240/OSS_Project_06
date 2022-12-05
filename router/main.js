@@ -71,10 +71,10 @@ module.exports = function(app){
         })
         });
         spotifyApi.getArtistRelatedArtists(SingerId)
-  .then(function(data){
-    console.log("===========================================================================")
-    if(data.body.artists.length==0) console.log("there is no related artist..")
-    console.log("----------related artist list-----------")
+    .then(function(data){
+        console.log("===========================================================================")
+        if(data.body.artists.length==0) console.log("there is no related artist..")
+        console.log("----------related artist list-----------")
             
     for(let i=0;i<data.body.artists.length;i++)
     {
@@ -82,14 +82,15 @@ module.exports = function(app){
             mostrelatedartistname = data.body.artists[0].id;
     }
     spotifyApi
-  .clientCredentialsGrant()
-  .then(function(data) {
+    .clientCredentialsGrant()
+    .then(function(data) {
     // Set the access token on the API object so that it's used in all future requests
     spotifyApi.setAccessToken(data.body['access_token']);
     // Get the most popular tracks by David Bowie in Great Britain
     return spotifyApi.getArtistTopTracks(mostrelatedartistname, 'kr');
-  })
-  .then(function(data) {
+    })
+    .then(function(data) {
+    let trackl = data.body.tracks.length;
     data.body.tracks.forEach(function(track, index) {
         
 
@@ -105,7 +106,7 @@ module.exports = function(app){
             relatedlivenessList.push(data.body.liveness);
             relatedtempoList.push(data.body.tempo);
 
-            if(tracknameList.length == 10){
+            if(relatedtracknameList.length == trackl){
                 var featureData = [0,0,0,0,0,0];
                 var relatefeatureData = [0,0,0,0,0,0];
                 for(var i=0; i < tracknameList.length; i++){
@@ -142,7 +143,7 @@ module.exports = function(app){
                     d3:relatefeatureData[3],
                     d4:relatefeatureData[4],
                     d5:relatefeatureData[5]
-            })
+                })
 
             }            
             
