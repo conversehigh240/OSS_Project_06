@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>   
 
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   </head>
+
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgb(255, 99, 132, 0.2)">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">오픈소스팀플</a>
+            <a class="navbar-brand" href="/"><strong>OSS_Project_06</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
             data-bs-target="#narbarNav" aria-controls="navbarNav" aria-expanded="false"
             aria-label="Togle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
+            <a href="https://open.spotify.com" class="nav-item">Spotify</a>
         </div>
     </nav>
-    <h4 class="container mt-5"><strong> 가수 ID 검색(artist page url)</strong></h4>
-    <div class="container input-group mb-1">
-        <input class="'form-control" id="search-input">
-        <button class="input-group-append btn btn-danger" id="search">검색</button>
+    <h4 class="container mt-5"><strong><center> Analyze</center></strong></h4>
+    <div class="container input-group mb-3">
+      <input type="text" class="form-control rounded-pill" placeholder="Who do you want to analyze?" aria-label="Who do you want to analyze?" aria-describedby="button-addon2" onfocus="this.placeholder=''" onblur="this.placeholder='Who do you want to analyze?'">
+      <button class="input-group-append btn btn-danger" id="search">Search</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
