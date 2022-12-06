@@ -25,6 +25,7 @@ module.exports = function(app){
 
         var mostrelatedartistname = "";
         var mran ="";
+        var art = "";
 
         var realrelatedtracknameList = [];
     
@@ -71,6 +72,11 @@ module.exports = function(app){
 
         })
         });
+        spotifyApi.getArtist(SingerId)
+        .then(function(data) {
+            console.log(data.body.name);
+            art = data.body.name;
+        })
         spotifyApi.getArtistRelatedArtists(SingerId)
     .then(function(data){
         console.log("===========================================================================")
@@ -134,6 +140,7 @@ module.exports = function(app){
                     ll : tracknameList.length,
                     l : relatedtracknameList.length,
                     relatedArtist : mran,
+                    artistname : art,
                     relatetracklist : relatedtracknameList,
                     data0:featureData[0], 
                     data1:featureData[1], 
