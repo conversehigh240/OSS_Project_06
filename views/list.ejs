@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>   
 
+    <style>
+
+      div{
+        margin-left: 100px;
+      }
+      table {
+        border-style: none;
+      }
+    </style>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   </head>
@@ -45,87 +55,97 @@
       }
     </script>
 
-    <font size=6em>
-        <strong>
-            Top 10 songs of <%= artistname %>
-        </strong>
-    </font>
+    <table border=1 width="100%" height="100%">
+      <tr>
+        <td width="50%">
+          <div>
+            <font size=6em>
+              <strong>
+                  Top 10 songs of <%= artistname %>
+              </strong>
+            </font>
 
-    <font size=3em>
-      <% for (var i = 1; i < ll+1; i++) { %>
-        <h4> <%=i%>. <%= tracklist[i-1] %></h4>
-      <% } %>
-    </font>
-    <font size=6em>
-      <strong>
-          related artist(<%= relatedArtist %>)'s song
-      </strong>
-    </font>
-    <font size=3em>
-      <% for (var i = 1; i < l+1 ; i++) { %>
-        <h4> <%=i%>. <%= relatetracklist[i-1] %></h4>
-      <% } %>
-    </font>
-
-
-    <!-- -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <div>
-        <canvas id="myChart" width="500" height="500"></canvas>
-      </div>
-
-      <script>
-        const ctx = document.getElementById('myChart');
-        
+            <font size=3em>
+              <% for (var i = 1; i < ll+1; i++) { %>
+                  <h4> <%=i%>. <%= tracklist[i-1] %></h4>
+              <% } %>
+            </font>
+            <font size=6em>
+              <strong>
+                  Top 10 songs of related artist(<%= relatedArtist %>) 
+              </strong>
+            </font>
+            <font size=3em>
+              <% for (var i = 1; i < l+1 ; i++) { %>
+                <h4> <%=i%>. <%= relatetracklist[i-1] %></h4>
+              <% } %>
+            </font>
+          </div>
+        </td>
 
 
-        new Chart(ctx, {
-          type: 'radar',
-          data: {
-            labels: [ 'danceability', 'energy', 'loudness' , 'acousticness', 'liveness', 'tempo'],
-            datasets: [{
-              label: 'artist',
-              data: ['<%= data0 %>','<%= data1 %>','<%= data2 %>','<%= data3 %>','<%= data4 %>','<%= data5 %>'],
-              fill: true,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgb(255, 99, 132)',
-              pointBackgroundColor: 'rgb(255, 99, 132)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgb(255, 99, 132)',
-            },{
-              label: 'related artist',
-              data: ['<%= d0%>','<%= d1%>','<%= d2%>','<%= d3%>','<%= d4%>','<%= d5%>' ],
-              fill: true,
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderColor: 'rgb(54, 162, 235)',
-              pointBackgroundColor: 'rgb(54, 162, 235)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgb(54, 162, 235)'
-            }]
-          },
-          options: {
-            responsive: false,
-            elements: {
-              line: {
-                borderWidth: 3
-              }
-            }
-          },
-        });
-      </script>
+        <td width="50%">
+          <!-- -->
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <div>
+              <canvas id="myChart" width="500" height="500"></canvas>
+          </div>
 
-    
-    
+          <script>
+            const ctx = document.getElementById('myChart');
+              
+
+
+            new Chart(ctx, {
+              type: 'radar',
+              data: {
+                labels: [ 'danceability', 'energy', 'loudness' , 'acousticness', 'liveness', 'tempo'],
+                datasets: [{
+                  label: 'artist',
+                  data: ['<%= data0 %>','<%= data1 %>','<%= data2 %>','<%= data3 %>','<%= data4 %>','<%= data5 %>'],
+                  fill: true,
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgb(255, 99, 132)',
+                  pointBackgroundColor: 'rgb(255, 99, 132)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgb(255, 99, 132)',
+                },{
+                  label: 'related artist',
+                  data: ['<%= d0%>','<%= d1%>','<%= d2%>','<%= d3%>','<%= d4%>','<%= d5%>' ],
+                  fill: true,
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgb(54, 162, 235)',
+                  pointBackgroundColor: 'rgb(54, 162, 235)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgb(54, 162, 235)'
+                }]
+              },
+              options: {
+                responsive: false,
+                elements: {
+                  line: {
+                    borderWidth: 3
+                  }
+                }
+              },
+            });
+          </script>
+        </td>
+      </tr>
+
       
-    
-                
-    <!-- -->
+      
+        
+      
+                  
+      <!-- -->
 
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="js/bootstrap.min.js"></script>
+      <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+      <script src="js/bootstrap.min.js"></script>
+    </table>
   </body>
 </html>
