@@ -9,8 +9,8 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());	// json 등록
 app.use(bodyParser.urlencoded({ extended : false }));
 
-var server = app.listen(8080, function(){
-    console.log('listening on 8080')
+var server = app.listen(8888, function(){
+    console.log('listening on 8888')
 });
 
 //app.use(express.static('public'));
