@@ -8,7 +8,8 @@
 
 - NodeJS with Express
 - Spotify API
-- 
+- Mysql (Database)
+- AWS (Server Host)
 
 ## Installation
 
@@ -42,10 +43,15 @@
 
 ## License
 
-MIT License Copyright(c) chulhan Lee
+MIT License Copyright(c)
 
 ## Contact
 
 궁금한 점이 있으시면, 아래의 주소로 연락주시기 바랍니다.
 
-herrtane@khu.ac.kr
+이철한 : herrtane@khu.ac.kr
+김지애 : theyummy@khu.ac.kr
+서양하 : didgk0823@khu.ac.kr
+김남호 : shawnbest@khu.ac.kr
+강지호 : jiho9487@khu.ac.kr
+이상혁 : omg0mg@khu.ac.kr
