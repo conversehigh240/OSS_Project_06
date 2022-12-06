@@ -19,6 +19,7 @@
   - npm install
   - npm install express --save
   - npm install spotify-web-api-node --save
+  - npm install ejs
   
 2. 소스코드의 client_id와 secret에 제공받은 값 넣기 (기본적으로 채워져있는 값이 문제가 없다면, 건너뛰어도 무방)
 
