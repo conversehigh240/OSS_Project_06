@@ -10,6 +10,8 @@ app.use(bodyParser.json());	// json 등록
 app.use(bodyParser.urlencoded({ extended : false }));
 
 var server = app.listen(8888, function(){
+    var host = server.address().address;
+    var port = server.address().port;
     console.log('listening on 8888')
 });
 
