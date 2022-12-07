@@ -29,8 +29,6 @@
 
 ### About db.js
 
-## Installation and Current status
-
 1. 필요한 모듈 설치
   - npm init -y
   - npm i express --save
