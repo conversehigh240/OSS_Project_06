@@ -4,15 +4,26 @@ module.exports = function(app){
         clientId: '819112b2849b42e3b308a5a40d1200ae',
         clientSecret: '577548c8e3044004b94d6c2cf8615127'
       });
-    
+    const fs = require('fs');
+    const jsonFile = fs.readFileSync('./artist.json', 'utf8');
+    const jsonData = JSON.parse(jsonFile);
 
     app.get('/', function(req,res){
         res.render('main', {title: 'Search Singer'});
     });
 
     app.get('/search/:singer',function(req, res, next){
-        SingerId = req.params.singer;
+        singername = req.params.singer;
         
+        for (var i = 0;i<jsonData.length;i++)
+        {
+            if (singername == jsonData[i]['artist_name'])
+            {
+                SingerId = jsonData[i]['artist_id'];
+                break;
+            }
+        }
+
 
         var tracknameList = [];
 
