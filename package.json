@@ -2,9 +2,9 @@
   "name": "db",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "db.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon db.js"
   },
   "keywords": [],
   "author": "",
