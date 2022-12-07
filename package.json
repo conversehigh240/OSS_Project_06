@@ -1,0 +1,19 @@
+{
+  "name": "oss_project_06",
+  "version": "1.0.0",
+  "description": "final",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conversehigh240/OSS_Project_06.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conversehigh240/OSS_Project_06/issues"
+  },
+  "homepage": "https://github.com/conversehigh240/OSS_Project_06#readme"
+}
