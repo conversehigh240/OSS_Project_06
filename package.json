@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/conversehigh240/OSS_Project_06/issues"
   },
-  "homepage": "https://github.com/conversehigh240/OSS_Project_06#readme"
+  "homepage": "https://github.com/conversehigh240/OSS_Project_06#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "chart.js": "^4.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "spotify-web-api-node": "^5.0.2"
+  }
 }
