@@ -36,9 +36,10 @@ module.exports = function(app){
         var singername = req.params.singer;
         
         
+        /*
         for (var i = 0;i<jsonData.length;i++)
         {
-            if (singername == jsonData[i]['artist_name'])
+            if (singername == jsonData[i]['artist_name'].toLowerCase())
             {
                 SingerId = jsonData[i]['artist_id']
                 break;
@@ -178,6 +179,7 @@ module.exports = function(app){
                     featureData[0] += danceabilityList[i]/tracknameList.length;
                     featureData[1] += energyList[i]/tracknameList.length;
                     featureData[2] -= loudnessList[i]/(tracknameList.length*4); //음수라 빼는게 더하는거
+                    featureData[2] -= loudnessList[i]/(tracknameList.length*4); //음수라 빼는게 더하는거
                     featureData[3] += acousticnessList[i]/tracknameList.length;
                     featureData[4] += livenessList[i]/tracknameList.length;
                     featureData[5] += tempoList[i]/(tracknameList.length * 100); //tempo는 값이 너무 커서 비율 맞추려고 줄임
@@ -185,6 +187,7 @@ module.exports = function(app){
                 for (var i = 0; i < relatedtracknameList.length; i++){
                     relatefeatureData[0] += relateddanceabilityList[i]/relatedtracknameList.length;
                     relatefeatureData[1] += relatedenergyList[i]/relatedtracknameList.length;
+                    relatefeatureData[2] -= relatedloudnessList[i]/(relatedtracknameList.length*4);
                     relatefeatureData[2] -= relatedloudnessList[i]/(relatedtracknameList.length*4);
                     relatefeatureData[3] += relatedacousticnessList[i]/relatedtracknameList.length;
                     relatefeatureData[4] += relatedlivenessList[i]/relatedtracknameList.length;
