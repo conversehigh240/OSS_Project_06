@@ -61,6 +61,7 @@ const con = mysql.createConnection({
 // }});
 
 app.get('/db', (req, res) => {
+    
     //const sql = "SELECT artist_id FROM artist_info WHERE artist_name = 'iu'";
     const sql = "select * from artists"
     con.query(sql, function(err, results, fields) {

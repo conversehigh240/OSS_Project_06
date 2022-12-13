@@ -7,22 +7,68 @@ module.exports = function(app){
     const fs = require('fs');
     const jsonFile = fs.readFileSync('./artist.json', 'utf8');
     const jsonData = JSON.parse(jsonFile);
-
+/** 
+    const mysql = require('mysql');
+    var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1234',
+    database: 'artist_info'
+    });
+    connection.connect();
+*/
     app.get('/', function(req,res){
         res.render('main', {title: 'Search Singer'});
     });
-
+/**
+    app.get('/db', (req, res) => {
+        const sql = "SELECT artist_id FROM artists WHERE artist_name = 'iu'";
+        //const sql = "select * from artists"
+        connection.query(sql, function(err, results, fields) {
+            if(err) 
+            throw err;
+    
+            res.send(results)
+        });
+    });
+ */
     app.get('/search/:singer',function(req, res, next){
-        singername = req.params.singer;
+        var singername = req.params.singer;
+        
         
         for (var i = 0;i<jsonData.length;i++)
         {
             if (singername == jsonData[i]['artist_name'])
             {
-                SingerId = jsonData[i]['artist_id'];
+                SingerId = jsonData[i]['artist_id']
                 break;
             }
+            else{
+                SingerId = 0;
+            }
         }
+        if(SingerId == 0)
+        {
+            res.render('no',{title: 'no singer' });
+        }
+        
+
+        /*
+        connection.query("SELECT artist_id FROM artists WHERE artist_name = ?;",[singername],function(error, result, fields){
+            if (error){
+                //res.render('no',{title: 'no singer' });
+                throw error;
+            }
+            if(result.length == 1)
+            {
+                SingerId = result[0]['artist_id'];
+                console.log(SingerId);
+            }
+            else {
+                res.render('no',{title: 'no singer' });
+            }  
+        })*/
+        
 
 
         var tracknameList = [];
@@ -131,7 +177,7 @@ module.exports = function(app){
                 for(var i=0; i < tracknameList.length; i++){
                     featureData[0] += danceabilityList[i]/tracknameList.length;
                     featureData[1] += energyList[i]/tracknameList.length;
-                    featureData[2] -= loudnessList[i]/tracknameList.length; //음수라 빼는게 더하는거
+                    featureData[2] -= loudnessList[i]/(tracknameList.length*4); //음수라 빼는게 더하는거
                     featureData[3] += acousticnessList[i]/tracknameList.length;
                     featureData[4] += livenessList[i]/tracknameList.length;
                     featureData[5] += tempoList[i]/(tracknameList.length * 100); //tempo는 값이 너무 커서 비율 맞추려고 줄임
@@ -139,7 +185,7 @@ module.exports = function(app){
                 for (var i = 0; i < relatedtracknameList.length; i++){
                     relatefeatureData[0] += relateddanceabilityList[i]/relatedtracknameList.length;
                     relatefeatureData[1] += relatedenergyList[i]/relatedtracknameList.length;
-                    relatefeatureData[2] -= relatedloudnessList[i]/relatedtracknameList.length;
+                    relatefeatureData[2] -= relatedloudnessList[i]/(relatedtracknameList.length*4);
                     relatefeatureData[3] += relatedacousticnessList[i]/relatedtracknameList.length;
                     relatefeatureData[4] += relatedlivenessList[i]/relatedtracknameList.length;
                     relatefeatureData[5] += relatedtempoList[i]/(relatedtracknameList.length*100);
